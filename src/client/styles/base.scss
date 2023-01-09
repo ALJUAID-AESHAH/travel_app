@@ -1,0 +1,29 @@
+body {
+    display: block;
+    margin: 8px;
+}
+
+.container {
+    display: grid;
+    width: auto;
+    grid-template-columns: 100%;
+    grid-template-rows: 100px 350px 100px;
+}
+
+.box {
+    padding: 2%;
+    height: auto;
+}
+
+main {
+    grid-area: 2/1/2/1;
+}
+
+header {
+    grid-area: 1/1/1/1;
+    background-color: aqua;
+}
+
+footer {
+    grid-area: 3/1/3/1;
+}
