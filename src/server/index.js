@@ -1,23 +1,32 @@
-var path = require('path')
-const express = require('express')
-const mockAPIResponse = require('./mockAPI.js')
+let path = require('path')
+// Require Express to run server and routes
+const express = require('express');
+
+// Start up an instance of app
+const app = express()
+
+// configure environment variables
 const dotenv = require('dotenv');
 dotenv.config();
-const app = express()
+
+/* Middleware */
+// Configuring express to use body-parser as middle-ware.
 const bodyParser = require('body-parser')
-const cors = require('cors');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+// Cors for cross origin allowance
+const cors = require('cors');
 app.use(cors());
+
+// Initialize the main project folder
 app.use(express.json())
 app.use(express.static('dist'))
 
 console.log(__dirname)
-// console.log(`Your API key is ${process.env.API_KEY}`);
 
 app.get('/', function (req, res) {
     res.sendFile('dist/index.html')
-    // res.sendFile(path.resolve('src/client/views/index.html'))
 })
 
 // designates what port the app will listen to for incoming requests
@@ -25,26 +34,64 @@ app.listen(8081, function () {
     console.log('Example app listening on port 8081!')
 })
 
-app.post('/test', async (req, res) => {
-    let type = '';
-    let urlRegex = /^(ftp|http|https):\/\/[^ "]+$/
-    urlRegex.test(req.body.data) ? type = "url" : type = "txt"
-    
-    const formdata = new FormData();
-    formdata.append("key", process.env.API_KEY);
-    formdata.append(type, req.body.data);
-    formdata.append("lang", "en");
 
-    const requestOptions = {
-        method: 'POST',
-        body: formdata,
-        redirect: 'follow'
-    };
-    const response = fetch("https://api.meaningcloud.com/sentiment-2.1", requestOptions)
+const geonamesBaseUrl = 'http://api.geonames.org/searchJSON?formatted=true&q=';
+app.post('/geonames', async (req, res) => {
+    const response = fetch(geonamesBaseUrl + req.body.city + '&username=' + process.env.USER_NAME + '&style=full')
         .then((response) => response.json())
         .then((responseJSON) => {
-            res.send(responseJSON);
+            let result = responseJSON.geonames
+            res.send(result[0]);
         })
         .catch(error => console.log('error', error));
-
 })
+
+//calculate num of days away the trip
+function countdown(data) {
+    const date = Date.parse(data.date);
+    const today = Date.parse(new Date());
+    const time = Math.abs(date-today);
+    const days = Math.ceil(time / (1000 * 60 * 60 * 24));
+    return days;
+}
+
+const currentForecastUrl = 'https://api.weatherbit.io/v2.0/current?'
+const predictedForecastUrl='https://api.weatherbit.io/v2.0/forecast/daily?'
+app.post('/weatherbit', async (req, res) => {
+    const data = req.body.data
+    const diffDays = countdown(data)
+    if (diffDays > 7) {
+        const response = fetch(`${predictedForecastUrl}&lat=${data.latitude}&lon=${data.longitude}&key=${process.env.Weatherbit_API_KEY}`)
+            .then((response) => response.json())
+            .then((responseJSON) => {
+                // console.log(responseJSON);
+                responseJSON['days']=diffDays
+                res.send(responseJSON);
+            })
+            .catch(error => console.log('error', error));
+
+    } else {
+        const response = fetch(`${currentForecastUrl}&lat=${data.latitude}&lon=${data.longitude}&key=${process.env.Weatherbit_API_KEY}`)
+            .then((response) => response.json())
+            .then((responseJSON) => {
+                // console.log(responseJSON);
+                responseJSON['days']=diffDays
+                res.send(responseJSON);
+            })
+            .catch(error => console.log('error', error));
+    }
+})
+
+
+const PixabayBaseUrl = 'https://pixabay.com/api/?'
+app.post('/pixabay', async (req, res) => {
+    const response = fetch(`${PixabayBaseUrl}key=${process.env.Pixabay_API_KEY}&q=${req.body.city}&image_type=photo&pretty=true`)
+        .then((response) => response.json())
+        .then((responseJSON) => {
+            // console.log(responseJSON.hits);
+            res.send(responseJSON.hits[0]);
+        })
+        .catch(error => console.log('error', error));
+})
+
+module.exports = app

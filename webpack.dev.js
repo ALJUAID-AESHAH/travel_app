@@ -12,9 +12,6 @@ module.exports = {
         libraryTarget: 'var',
         library: 'Client'
     },
-    // experiments: {
-    //     topLevelAwait: true
-    // },
     module: {
         rules: [
             {

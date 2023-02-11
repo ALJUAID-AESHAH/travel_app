@@ -3,44 +3,79 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Test</title>
+    <title>Travel App</title>
+    <script src="https://kit.fontawesome.com/f0950059e7.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 </head>
 
 <body>
     <div class="container">
-        <header class="box">
-            <div class="">
-                Logo
-            </div>
-            <div class="">
-                navigation
-            </div>
-        </header>
-
-        <main class="box">
-            <section>
-                <p id="validate"></p>
-            </section>
-            <section>
-                <form class="" onsubmit="return handleSubmit(event)">
-                    <input id="name" type="text" name="input" value="" onblur="onBlur()" placeholder="Enter url or txt">
-                    <input type="submit" name="" value="submit" onclick="return Client.handleSubmit(event)" onsubmit="return handleSubmit(event)">
-                </form>
-            </section>
-
-            <section>
-                <strong>Results</strong>
-                <div id="results">
-
+        <div class="header">
+            <div class="nestedGrid1">
+                <div class="title">
+                    <h2>Travel Planner</h2>
                 </div>
-            </section>
-        </main>
+                <div class="myBtn">
+                    <button id="myBtn" onclick="return Client.handleClick(event)" onsubmit="return handleClick(event)">&plus; add trip</button>
+                </div>
+            </div>
+            <!-- The spinner -->
+            <div id="hide-loader">
+                <div class="lds-ellipsis">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+            <!-- The Modal -->
+            <div id="myModal" class="modal">
 
-        <footer class="box">
-            <p>This is a footer</p>
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <!-- <div style="width: 100%; border: 2px solid red; height: auto;"> -->
+                    <span class="close">&times;</span>
+                    <!-- </div> -->
+                    <div class="form">
+                        <p id="validation" style="color:red;display:none">Please, fill the field!</p>
+                        <input type="text" placeholder="City" id="city" required>
+                        <input type="date" placeholder="Date" id="date" required>
+                        <button type="submit" id="search" value="submit" onclick="return Client.handleSubmit(event)" onsubmit="return handleSubmit(event)">Search</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- The Confirmmation modal -->
+            <div id="myModal2" class="modal">
+
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <div class="summary">
+                    </div>
+                    <div class="submit">
+                        <button type="submit" id="add">Add trip</button>
+                        <button type="submit" id="cancel">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content box ">
+            <div class="mySlides">
+                No trips!!
+            </div>
+
+            <button class="w3-button w3-black w3-display-left" onclick="Client.plusDivs(-1)">&#10094;</button>
+            <button class="w3-button w3-black w3-display-right" onclick="Client.plusDivs(1)">&#10095;</button>
+        </div>
+        <footer class="footer">
+            <h3>All right reserved &copy 2022</h3>
+            <div class="accounts">
+                <a href=""><i class='fab icon'>&#xf08c;</i></a>
+                <a href=""><i class='fab icon'>&#xf081;</i></a>
+                <a href=""><i class='fab icon'>&#xf092;</i></a>
+            </div>
         </footer>
     </div>
-
     <script>
         // Check that service workers are supported
         if ('serviceWorker' in navigator) {
@@ -50,7 +85,6 @@
             });
         }
     </script>
-
 </body>
 
 </html>

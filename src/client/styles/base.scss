@@ -1,29 +1,148 @@
+/* Small Screens */
+
 body {
-    display: block;
-    margin: 8px;
+    font-family: cursive;
 }
 
 .container {
     display: grid;
     width: auto;
     grid-template-columns: 100%;
-    grid-template-rows: 100px 350px 100px;
+    grid-template-rows: 130px 100% 130px;
 }
 
 .box {
-    padding: 2%;
+    padding: 1%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: auto;
 }
 
-main {
-    grid-area: 2/1/2/1;
+.header {
+    grid-area: 1/1/1/1;
 }
 
-header {
-    grid-area: 1/1/1/1;
-    background-color: aqua;
+.content1 p {
+    font-size: 20px;
+    font-weight: 400px;
+}
+
+.nestedGrid {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    margin: auto;
+    grid-template-columns: 100%;
+    grid-template-rows: 50% 50%;
+}
+
+.footer h3 {
+    margin: auto;
+    font-size: 15px;
+    color: gray;
+}
+
+.image {
+    background-color: #FFEDEE;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-position: center;
+}
+
+.content {
+    background-color: #FFEDEE;
+}
+
+.mySlides {
+    display: none;
+    margin: auto;
+    width: 85%;
+    height: 90%;
 }
 
 footer {
-    grid-area: 3/1/3/1;
+    margin: auto;
+}
+
+.icon {
+    font-size: 20px;
+}
+
+.accounts,
+.footer h3 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.accounts i {
+    margin: 6px;
+    color: black;
+}
+
+
+/* Medium Screens */
+
+@media (min-width: 600px) and (max-width:900px) {
+    .container {
+        display: grid;
+        width: 100%;
+        grid-template-columns: 100%;
+        grid-template-rows: 130px 300px 130px;
+    }
+    .box {
+        padding: 2%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .header {
+        grid-area: 1/1/1/3;
+    }
+    .nestedGrid {
+        display: grid;
+        grid-template-columns: 40% 60%;
+        grid-template-rows: 100%;
+    }
+    .description {
+        margin-left: 6%;
+    }
+    .footer {
+        grid-area: 3/1/3/3;
+    }
+}
+
+
+/* Large Screens */
+
+@media (min-width:901px) {
+    .container {
+        display: grid;
+        width: 100%;
+        grid-template-columns: 100%;
+        grid-template-rows: 150px 300px 150px;
+    }
+    .box {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .header {
+        grid-area: 1/1/1/3;
+        background-repeat: no-repeat;
+        background-size: 400px 300px;
+        background-position: center;
+    }
+    .nestedGrid {
+        display: grid;
+        grid-template-columns: 40% 60%;
+        grid-template-rows: 100%;
+    }
+    .description {
+        margin-left: 6%;
+    }
+    .footer {
+        grid-area: 3/1/3/3;
+    }
 }

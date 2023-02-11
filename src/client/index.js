@@ -1,17 +1,20 @@
-import { checkForInput } from './js/validation'
-import { handleSubmit } from './js/formHandler'
-import './styles/resets.scss'
+import { handleClick,handleSubmit } from './js/formHandler'
+import { getData, getWeather, getImage } from './js/requests'
+import { plusDivs } from './js/slidesShow'
+import { handleConfirm } from './js/confirm'
+
+// import './styles/resets.scss'
 import './styles/base.scss'
-import './styles/footer.scss'
-import './styles/form.scss'
+import './styles/spinner.scss'
 import './styles/header.scss'
-import './styles/section.scss'
+import './styles/modal.scss'
 
-// console.log(checkForName);
-
-alert("I doneee")
-// console.log("CHANGE!!");
 export {
-    checkForInput,
-    handleSubmit
+    handleClick,
+    handleSubmit,
+    getData,
+    getWeather,
+    getImage,
+    plusDivs,
+    handleConfirm
 }
