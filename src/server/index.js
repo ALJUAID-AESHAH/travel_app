@@ -1,3 +1,9 @@
+USER_NAME="aisha9996"
+
+Weatherbit_API_KEY="864fc978fbcb484c8d408dd06641b424"
+
+Pixabay_API_KEY="33027058-4c422d8869fe5b5d56db3143b"
+
 let path = require('path')
 // Require Express to run server and routes
 const express = require('express');
@@ -37,7 +43,7 @@ app.listen(8081, function () {
 
 const geonamesBaseUrl = 'http://api.geonames.org/searchJSON?formatted=true&q=';
 app.post('/geonames', async (req, res) => {
-    const response = fetch(geonamesBaseUrl + req.body.city + '&username=' + process.env.USER_NAME + '&style=full')
+    const response = fetch(geonamesBaseUrl + req.body.city + '&username=' + USER_NAME + '&style=full')
         .then((response) => response.json())
         .then((responseJSON) => {
             let result = responseJSON.geonames
@@ -61,7 +67,7 @@ app.post('/weatherbit', async (req, res) => {
     const data = req.body.data
     const days = countdown(data)
     if (days > 7) {
-        const response = fetch(`${predictedForecastUrl}&lat=${data.latitude}&lon=${data.longitude}&key=${process.env.Weatherbit_API_KEY}`)
+        const response = fetch(`${predictedForecastUrl}&lat=${data.latitude}&lon=${data.longitude}&key=${Weatherbit_API_KEY}`)
             .then((response) => response.json())
             .then((responseJSON) => {
                 // console.log(responseJSON);
@@ -71,11 +77,11 @@ app.post('/weatherbit', async (req, res) => {
             .catch(error => console.log('error', error));
 
     } else {
-        const response = fetch(`${currentForecastUrl}&lat=${data.latitude}&lon=${data.longitude}&key=${process.env.Weatherbit_API_KEY}`)
+        const response = fetch(`${currentForecastUrl}&lat=${data.latitude}&lon=${data.longitude}&key=${Weatherbit_API_KEY}`)
             .then((response) => response.json())
             .then((responseJSON) => {
                 // console.log(responseJSON);
-                responseJSON['days']=diffDays
+                responseJSON['days']=days
                 res.send(responseJSON);
             })
             .catch(error => console.log('error', error));
@@ -85,7 +91,7 @@ app.post('/weatherbit', async (req, res) => {
 
 const PixabayBaseUrl = 'https://pixabay.com/api/?'
 app.post('/pixabay', async (req, res) => {
-    const response = fetch(`${PixabayBaseUrl}key=${process.env.Pixabay_API_KEY}&q=${req.body.city}&image_type=photo&pretty=true`)
+    const response = fetch(`${PixabayBaseUrl}key=${Pixabay_API_KEY}&q=${req.body.city}&image_type=photo&pretty=true`)
         .then((response) => response.json())
         .then((responseJSON) => {
             // console.log(responseJSON.hits);
