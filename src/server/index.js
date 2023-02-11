@@ -59,13 +59,13 @@ const currentForecastUrl = 'https://api.weatherbit.io/v2.0/current?'
 const predictedForecastUrl='https://api.weatherbit.io/v2.0/forecast/daily?'
 app.post('/weatherbit', async (req, res) => {
     const data = req.body.data
-    const diffDays = countdown(data)
-    if (diffDays > 7) {
+    const days = countdown(data)
+    if (days > 7) {
         const response = fetch(`${predictedForecastUrl}&lat=${data.latitude}&lon=${data.longitude}&key=${process.env.Weatherbit_API_KEY}`)
             .then((response) => response.json())
             .then((responseJSON) => {
                 // console.log(responseJSON);
-                responseJSON['days']=diffDays
+                responseJSON['days']=days
                 res.send(responseJSON);
             })
             .catch(error => console.log('error', error));
