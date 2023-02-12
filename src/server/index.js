@@ -1,8 +1,8 @@
-USER_NAME="aisha9996"
+const USER_NAME="aisha9996"
 
-Weatherbit_API_KEY="864fc978fbcb484c8d408dd06641b424"
+const Weatherbit_API_KEY="864fc978fbcb484c8d408dd06641b424"
 
-Pixabay_API_KEY="33027058-4c422d8869fe5b5d56db3143b"
+const Pixabay_API_KEY="33027058-4c422d8869fe5b5d56db3143b"
 
 let path = require('path')
 // Require Express to run server and routes
