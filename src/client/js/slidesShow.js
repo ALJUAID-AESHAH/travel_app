@@ -81,6 +81,9 @@ async function showTrips() {
                 })
             document.querySelector('.content').appendChild(newDiv)
         }
+    }else{
+        document.getElementById('right-btn').style.display='none'
+        document.getElementById('left-btn').style.display='none'
     }
 }
 
